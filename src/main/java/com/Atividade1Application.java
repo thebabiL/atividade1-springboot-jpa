@@ -1,4 +1,4 @@
-package com.semana5.Atividade1;
+package com;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
