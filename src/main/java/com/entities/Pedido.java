@@ -3,6 +3,7 @@ package com.entities;
 import java.io.Serializable;
 import java.time.Instant;
 
+import com.entities.enums.PedidoStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.Entity;
@@ -24,6 +25,8 @@ public class Pedido implements Serializable
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
   private Instant momento;
 
+  private PedidoStatus pedidoStatus;
+
   @ManyToOne
   @JoinColumn(name = "cliente_id")
   private Usuario cliente;
@@ -33,10 +36,11 @@ public class Pedido implements Serializable
 
   }
 
-  public Pedido(Long id, Instant momento, Usuario cliente) 
+  public Pedido(Long id, Instant momento, Usuario cliente, PedidoStatus pedidoStatus) 
   {
     this.id = id;
     this.momento = momento;
+    this.pedidoStatus = pedidoStatus;
     this.cliente = cliente;
   }
 
@@ -68,6 +72,16 @@ public class Pedido implements Serializable
   public void setCliente(Usuario cliente) 
   {
     this.cliente = cliente;
+  }
+
+  public PedidoStatus getPedidoStatus() 
+  {
+    return pedidoStatus;
+  }
+
+  public void setPedidoStatus(PedidoStatus pedidoStatus) 
+  {
+    this.pedidoStatus = pedidoStatus;
   }
 
   @Override
