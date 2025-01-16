@@ -2,8 +2,6 @@ package com.config;
 
 import java.time.Instant;
 import java.util.Arrays;
-import java.util.Locale.Category;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -48,6 +46,17 @@ public class TesteConfig implements CommandLineRunner
     Produto pro4 = new Produto(null, "PC Gamer", "Donec aliquet odio ac rhoncus cursus.", 1200.0, "");
     Produto pro5 = new Produto(null, "Rails para Leigos", "Cras fringilla convallis sem vel faucibus.", 100.99, "");
 
+    repositorioCategoria.saveAll(Arrays.asList(cat1, cat2, cat3));
+    repositorioProduto.saveAll(Arrays.asList(pro1, pro2, pro3, pro4, pro5));
+
+    pro1.getCategorias().add(cat2);
+    pro2.getCategorias().add(cat1);
+    pro2.getCategorias().add(cat3);
+    pro3.getCategorias().add(cat3);
+    pro4.getCategorias().add(cat3);
+    pro5.getCategorias().add(cat2);
+
+    repositorioProduto.saveAll(Arrays.asList(pro1, pro2, pro3, pro4, pro5));
 
     Usuario u1 = new Usuario(null, "Maria Brown", "maria@gmail.com", "988888888", "123456");
     Usuario u2 = new Usuario(null, "Alex Green", "alex@gmail.com", "977777777", "123456"); 
@@ -56,8 +65,7 @@ public class TesteConfig implements CommandLineRunner
     Pedido p2 = new Pedido(null, Instant.parse("2019-07-21T03:42:10Z"), PedidoStatus.AGUARDANDO_PAGAMENTO, u2);
     Pedido p3 = new Pedido(null, Instant.parse("2019-07-22T15:21:22Z"), PedidoStatus.ENVIADO, u1);
 
-    repositorioCategoria.saveAll(Arrays.asList(cat1, cat2, cat3));
-    repositorioProduto.saveAll(Arrays.asList(pro1, pro2, pro3, pro4, pro5));
+  
     repositorioUsuario.saveAll(Arrays.asList(u1, u2));
     repositorioPedido.saveAll(Arrays.asList(p1, p2, p3));
   }
