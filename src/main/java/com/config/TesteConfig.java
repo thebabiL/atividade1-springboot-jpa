@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Profile;
 import com.entities.Categoria;
 import com.entities.Pedido;
 import com.entities.ItemPedido;
+import com.entities.Pagamento;
 import com.entities.Produto;
 import com.entities.Usuario;
 import com.entities.enums.PedidoStatus;
@@ -80,5 +81,10 @@ public class TesteConfig implements CommandLineRunner
     ItemPedido pi4 = new ItemPedido(p3, pro5, 2, pro5.getPreco()); 
 
     repositorioItemPedido.saveAll(Arrays.asList(pi1, pi2, pi3, pi4));
+
+    Pagamento pag1 = new Pagamento(null, Instant.parse("2019-06-20T21:53:07Z"), p1);
+    p1.setPagamento(pag1);
+
+    repositorioPedido.save(p1);
   }
 }
