@@ -9,10 +9,12 @@ import org.springframework.context.annotation.Profile;
 
 import com.entities.Categoria;
 import com.entities.Pedido;
+import com.entities.ItemPedido;
 import com.entities.Produto;
 import com.entities.Usuario;
 import com.entities.enums.PedidoStatus;
 import com.repositories.RepositorioCategoria;
+import com.repositories.RepositorioItemPedido;
 import com.repositories.RepositorioPedido;
 import com.repositories.RepositorioProduto;
 import com.repositories.RepositorioUsuario;
@@ -32,6 +34,9 @@ public class TesteConfig implements CommandLineRunner
   
   @Autowired
   private RepositorioProduto repositorioProduto;
+
+  @Autowired
+  private RepositorioItemPedido repositorioItemPedido;
   
   @Override
   public void run(String... args) throws Exception 
@@ -68,5 +73,12 @@ public class TesteConfig implements CommandLineRunner
   
     repositorioUsuario.saveAll(Arrays.asList(u1, u2));
     repositorioPedido.saveAll(Arrays.asList(p1, p2, p3));
+
+    ItemPedido pi1 = new ItemPedido(p1, pro1, 2, pro1.getPreco());
+    ItemPedido pi2 = new ItemPedido(p1, pro3, 1, pro3.getPreco());
+    ItemPedido pi3 = new ItemPedido(p2, pro3, 2, pro3.getPreco());
+    ItemPedido pi4 = new ItemPedido(p3, pro5, 2, pro5.getPreco()); 
+
+    repositorioItemPedido.saveAll(Arrays.asList(pi1, pi2, pi3, pi4));
   }
 }
