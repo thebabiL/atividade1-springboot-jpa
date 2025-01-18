@@ -4,11 +4,14 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.entities.Usuario;
 import com.repositories.RepositorioUsuario;
-import com.services.exceptions.ExceptionResursoNaoEncontrado;
+import com.services.exceptions.ExceptionBancoDados;
+import com.services.exceptions.ExceptionRecursoNaoEncontrado;
 
 @Service
 public class ServicoUsuario 
@@ -24,7 +27,7 @@ public class ServicoUsuario
   public Usuario findById(Long id)
   {
     Optional<Usuario> obj = repositorio.findById(id);
-    return obj.orElseThrow(() -> new ExceptionResursoNaoEncontrado(id));
+    return obj.orElseThrow(() -> new ExceptionRecursoNaoEncontrado(id));
   }
 
   public Usuario inserir(Usuario obj)
@@ -34,7 +37,23 @@ public class ServicoUsuario
 
   public void deletar(Long id)
   {
-    repositorio.deleteById(id);
+    try
+    {
+    // Verificar se o ID existe antes de deletar
+      if (!repositorio.existsById(id)) 
+      {
+        throw new ExceptionRecursoNaoEncontrado(id); // Lança a exceção se não encontrar o ID
+      }
+      repositorio.deleteById(id);
+     }
+    catch(EmptyResultDataAccessException e)
+    {
+      throw new ExceptionRecursoNaoEncontrado(id);
+    }
+    catch(DataIntegrityViolationException e)
+    {
+      throw new ExceptionBancoDados(e.getMessage());
+    }
   }
 
   public Usuario atualizar(Long id, Usuario obj)
