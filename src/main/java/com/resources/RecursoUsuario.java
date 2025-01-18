@@ -61,6 +61,6 @@ public class RecursoUsuario
    public ResponseEntity<Usuario> atualizar(@PathVariable Long id, @RequestBody Usuario obj)
    {
       obj = servico.atualizar(id, obj);
-      return ResponseEntity.ok().body(obj);
+      return ResponseEntity.ok().body(obj); 
    }
 }
